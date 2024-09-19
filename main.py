@@ -1,5 +1,6 @@
 import sys
 from code_parser import CodeParser
+from security_scanner import SecurityScanner
 
 def main():
     if len(sys.argv) < 2:
@@ -24,6 +25,18 @@ def main():
     print(f"Found {len(functions)} function(s).")
     print(f"Found {len(classes)} class(es).")
     print(f"Found {len(set(variables))} variable(s).")
+
+    # Security analysis
+    scanner = SecurityScanner(parser.tree)
+    scanner.scan()
+    vulnerabilities = scanner.get_vulnerabilities()
+
+    if vulnerabilities:
+        print("Security vulnerabilities found:")
+        for vuln in vulnerabilities:
+            print(f" - Line {vuln['line']}: {vuln['message']}")
+    else:
+        print("No security vulnerabilities found.")
 
 if __name__ == '__main__':
     main()
