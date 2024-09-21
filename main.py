@@ -1,6 +1,7 @@
 import sys
 from code_parser import CodeParser
-from security_scanner import SecurityScanner 
+from security_scanner import SecurityScanner
+from performance_analyzer import PerformanceAnalyzer
 
 def main():
     if len(sys.argv) < 2:
@@ -37,6 +38,19 @@ def main():
             print(f" - Line {vuln['line']}: {vuln['message']}")
     else:
         print("No security vulnerabilities found.")
+
+    # Performance analysis
+    performance_analyzer = PerformanceAnalyzer()
+    performance_analyzer.visit(parser.tree)
+    performance_analyzer.analyze(code)
+    performance_report = performance_analyzer.get_report()
+
+    print("Performance analysis report:")
+    for report in performance_report:
+        if report.get('error'):
+            print(f" - Function {report['function']}: Error - {report['error']}")
+        else:
+            print(f" - Function {report['function']}: {report['time']} seconds per 1000 executions")
 
 if __name__ == '__main__':
     main()
