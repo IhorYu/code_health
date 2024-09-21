@@ -1,6 +1,6 @@
 import sys
 from code_parser import CodeParser
-from security_scanner import SecurityScanner
+from security_scanner import SecurityScanner 
 
 def main():
     if len(sys.argv) < 2:
@@ -27,8 +27,8 @@ def main():
     print(f"Found {len(set(variables))} variable(s).")
 
     # Security analysis
-    scanner = SecurityScanner(parser.tree)
-    scanner.scan()
+    scanner = SecurityScanner()
+    scanner.scan(parser.tree)
     vulnerabilities = scanner.get_vulnerabilities()
 
     if vulnerabilities:
