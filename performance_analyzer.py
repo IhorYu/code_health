@@ -27,8 +27,21 @@ class PerformanceAnalyzer(ast.NodeVisitor):
 
         for func in self.functions:
             func_name = func.name
-            stmt = f"{func_name}()"
+
+            # Define a wrapper function that suppresses stdout
+            wrapper_code = f"""
+                def _wrapped_{func_name}():
+                import sys
+                import io
+                from contextlib import redirect_stdout
+                f = io.StringIO()
+                with redirect_stdout(f):
+                return {func_name}()
+                """
             try:
+                # Add the wrapper function to local_namespace
+                exec(wrapper_code, local_namespace)
+                stmt = f"_wrapped_{func_name}()"
                 timer = timeit.Timer(stmt=stmt, globals=local_namespace)
                 exec_time = timer.timeit(number=1000)
                 self.performance_report.append({

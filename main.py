@@ -2,6 +2,7 @@ import sys
 from code_parser import CodeParser
 from security_scanner import SecurityScanner
 from performance_analyzer import PerformanceAnalyzer
+from code_optimizer import CodeOptimizer
 
 def main():
     if len(sys.argv) < 2:
@@ -51,6 +52,18 @@ def main():
             print(f" - Function {report['function']}: Error - {report['error']}")
         else:
             print(f" - Function {report['function']}: {report['time']} seconds per 1000 executions")
+
+    # Code optimization
+    optimizer = CodeOptimizer(code)
+    optimizer.optimize()
+    suggestions = optimizer.get_suggestions()
+
+    if suggestions:
+        print("Code style suggestions:")
+        for suggestion in suggestions:
+            print(f" - Line {suggestion['line']}, Column {suggestion['column']}: {suggestion['code']} {suggestion['message']}")
+    else:
+        print("No code style issues found.")
 
 if __name__ == '__main__':
     main()
