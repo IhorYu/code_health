@@ -1,6 +1,6 @@
 import ast
 import timeit
-
+import textwrap
 class PerformanceAnalyzer(ast.NodeVisitor):
     def __init__(self):
         self.functions = []
@@ -30,14 +30,17 @@ class PerformanceAnalyzer(ast.NodeVisitor):
 
             # Define a wrapper function that suppresses stdout
             wrapper_code = f"""
-                def _wrapped_{func_name}():
+            def _wrapped_{func_name}():
                 import sys
                 import io
                 from contextlib import redirect_stdout
                 f = io.StringIO()
                 with redirect_stdout(f):
-                return {func_name}()
-                """
+                    return {func_name}()
+            """
+            # Remove indentation from the wrapper code
+            wrapper_code = textwrap.dedent(wrapper_code)
+
             try:
                 # Add the wrapper function to local_namespace
                 exec(wrapper_code, local_namespace)

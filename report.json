@@ -1,0 +1,44 @@
+{
+    "functions_found": 1,
+    "classes_found": 0,
+    "variables_found": 2,
+    "security_vulnerabilities": [],
+    "performance_report": [
+        {
+            "function": "bad_style_function",
+            "time": 0.0038414000009652227
+        }
+    ],
+    "style_suggestions": [
+        {
+            "line": 5,
+            "column": 1,
+            "code": "W292",
+            "message": "no newline at end of file"
+        },
+        {
+            "line": 4,
+            "column": 1,
+            "code": "E131",
+            "message": "continuation line unaligned for hanging indent"
+        },
+        {
+            "line": 2,
+            "column": 4,
+            "code": "E225",
+            "message": "missing whitespace around operator"
+        },
+        {
+            "line": 3,
+            "column": 7,
+            "code": "E225",
+            "message": "missing whitespace around operator"
+        },
+        {
+            "line": 5,
+            "column": 1,
+            "code": "W292",
+            "message": "no newline at end of file"
+        }
+    ]
+}

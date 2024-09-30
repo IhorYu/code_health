@@ -3,6 +3,7 @@ from code_parser import CodeParser
 from security_scanner import SecurityScanner
 from performance_analyzer import PerformanceAnalyzer
 from code_optimizer import CodeOptimizer
+from report_generator import ReportGenerator
 
 def main():
     if len(sys.argv) < 2:
@@ -64,6 +65,20 @@ def main():
             print(f" - Line {suggestion['line']}, Column {suggestion['column']}: {suggestion['code']} {suggestion['message']}")
     else:
         print("No code style issues found.")
+
+    # Collecting all results
+    report_data = {
+        'functions_found': len(functions),
+        'classes_found': len(classes),
+        'variables_found': len(set(variables)),
+        'security_vulnerabilities': vulnerabilities,
+        'performance_report': performance_report,
+        'style_suggestions': suggestions
+    }
+
+    # Generate report
+    report_generator = ReportGenerator(report_data)
+    report_generator.generate_json_report()
 
 if __name__ == '__main__':
     main()
